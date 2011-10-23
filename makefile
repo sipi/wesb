@@ -1,0 +1,7 @@
+
+
+main:
+
+
+clean:
+	rm *.pyc 
