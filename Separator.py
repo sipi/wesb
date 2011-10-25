@@ -5,8 +5,9 @@ from AppletView import AppletView
 class Separator(AppletView, AppletModel):
 
   def __init__(self, width, height, color):
-    AppletView.__init__(self, self)
-    AppletModel.__init__(self, -1)
+    AppletView.__init__(self)
+    AppletModel.__init__(self)
+    self.refresh_period = -1
     self.width = width
     self.height = height
     self.color = color

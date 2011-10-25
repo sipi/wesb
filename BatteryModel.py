@@ -4,17 +4,17 @@ from AppletModel import AppletModel
 class BatteryModel(AppletModel):
 
   
+  def __init__(self, bat_num, refresh_period):
+    AppletModel.__init__(self)
+    self.refresh_period = refresh_period
+    self.bat_num = bat_num
+    self.is_discharging = False
+    self.bat_dir = "/sys/class/power_supply/BAT"+str(self.bat_num)+"/"
+    self.energy_full = 0
+    self.energy_now = 0
+    self.percent = 100
+    self.__initEnergyFull()
 
-  def __init__(self, bat_num):
-      AppletModel.__init__(self, 3)
-
-      self.bat_num = bat_num
-      self.is_discharging = False
-      self.bat_dir = "/sys/class/power_supply/BAT"+str(self.bat_num)+"/"
-      self.energy_full = 0
-      self.energy_now = 0
-      self.percent = 100
-      self.__initEnergyFull()
 
   def getBatNum(self):
     return self.bat_num

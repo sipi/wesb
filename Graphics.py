@@ -4,16 +4,16 @@ WMFS_BIN_PATH = "/usr/local/bin/wmfs"
 
 class Graphics:
 
-  def __init__(self):
+  def __init__(self, num_screen):
     self.value = ""
-    self.num_screen = -1 #All screen 
-    self.x = 1000;
+    self.num_screen = num_screen #All screen 
+    self.x = 0;
 
 
   def send(self):
     command = WMFS_BIN_PATH + " -s "
     if self.num_screen >= 0:
-      command += self.num_screen + " "
+      command += str(self.num_screen) + " "
       
     os.system(command + "'" + self.value + " '")
     self.value = ""
@@ -34,7 +34,7 @@ class Graphics:
   def drawHBar(self, x, y, width, height, percent, bg_color, fg_color, border_color, border_size = 1):
     self.drawRect( x, y, width, height, border_color)
     self.drawRect( x + border_size, y + border_size, width - 2*border_size, height - 2*border_size, bg_color)  
-    self.drawRect( x + border_size, y + border_size, (width - 2*border_size)*percent, height - 2*border_size, fg_color)
+    self.drawRect( x + border_size, y + border_size, int((width - 2*border_size)*percent), height - 2*border_size, fg_color)
   
   ##
   # draw a vertical percent bar
