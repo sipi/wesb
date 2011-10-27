@@ -5,8 +5,7 @@ class BatteryModel(AppletModel):
 
   
   def __init__(self, bat_num, refresh_period):
-    AppletModel.__init__(self)
-    self.refresh_period = refresh_period
+    AppletModel.__init__(self, refresh_period)
     self.bat_num = bat_num
     self.is_discharging = False
     self.bat_dir = "/sys/class/power_supply/BAT"+str(self.bat_num)+"/"

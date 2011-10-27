@@ -9,7 +9,7 @@ class clock(AppletView, AppletModel):
  
   def __init__(self):
     AppletView.__init__(self)
-    AppletModel.__init__(self)
+    AppletModel.__init__(self, 0.1)
     self.__text = ""
     self.color = "#FFFFFF"
     self.date_format = "%a %d %b %H:%M"

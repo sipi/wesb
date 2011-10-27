@@ -4,9 +4,10 @@ WMFS_BIN_PATH = "/usr/local/bin/wmfs"
 
 class Graphics:
 
-  def __init__(self, num_screen):
+  def __init__(self, num_screen, height):
     self.value = ""
-    self.num_screen = num_screen #All screen 
+    self.num_screen = num_screen #-1 => All screen
+    self.height = height
     self.x = 0;
 
 
@@ -27,6 +28,9 @@ class Graphics:
 
   def drawRect(self, x, y, width, height, color):
     self.value += "\\b["+str(x)+";"+str(y)+";"+str(width)+";"+str(height)+";"+color+"]\\"
+
+  def drawImg(self, x, y, width, height, img_path):
+    self.value += "\\i["+str(x)+";"+str(y)+";"+str(width)+";"+str(height)+";"+img_path+"]\\"
 
   ##
   # draw a Horizontal percent bar

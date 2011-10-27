@@ -51,12 +51,12 @@ class battery(AppletView):
         self.count_blink = 0
 
 
-    g.x -= 37
+    g.x -= 32
     if (not blink) or self.count_blink > self.periode_blink/2:
       self.__drawBatteryBar(g, self.model.getPercent(), 2, 30, 11) 
 
 
 
   def __drawBatteryBar(self, g, percent, y, width, height):
-    g.drawHBar(g.x + 2, y, width, height, percent/100.0, self.background_color, self.barcolor, self.border_color);
-    g.drawRect(g.x + 2 + width, y + (height/3), 2, height/2, self.border_color) 
+    g.drawHBar(g.x, y, width, height, percent/100.0, self.background_color, self.barcolor, self.border_color);
+    g.drawRect(g.x + width, y + (height/3), 2, height/2, self.border_color) 

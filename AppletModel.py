@@ -3,8 +3,8 @@
 class AppletModel(object):
 
   
-  def __init__(self):
-    self.refresh_period = 0.01; #-1 => no refres
+  def __init__(self, refresh_period):
+    self.refresh_period = refresh_period; #-1 => no refresh
     self.last_time = 0;
 
   def run(self, new_time):

@@ -6,8 +6,7 @@ class Separator(AppletView, AppletModel):
 
   def __init__(self, width, height, color):
     AppletView.__init__(self)
-    AppletModel.__init__(self)
-    self.refresh_period = -1
+    AppletModel.__init__(self, -1)
     self.width = width
     self.height = height
     self.color = color
@@ -16,6 +15,6 @@ class Separator(AppletView, AppletModel):
     return self
 
   def paint(self, g):
-    g.x -= 3
+    g.x -= self.width
     g.drawRect(g.x, 0, self.width, self.height, self.color)
 
