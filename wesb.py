@@ -1,10 +1,12 @@
 
+import sys
 import time #sleep
 from Screen import Screen
 from AppletView import AppletView
 from AppletModel import AppletModel
 from Graphics import Graphics
 from Separator import Separator
+
 
 screens = []
 applets_models = set()
@@ -86,9 +88,10 @@ while i < len(tokens) - 1:
     if(token == '[/screen]'):
       state = 0
     elif(token[0] == "["):
+      package_name = "applets."
       module_name = token[1:-1]
-      mod = __import__(module_name)
-      applet = getattr(mod, module_name)()
+      mod = __import__(package_name + module_name)
+      applet = getattr(sys.modules[package_name + module_name], module_name)()
       screen.addApplet(applet)
       state = 2
     else:
@@ -99,6 +102,7 @@ while i < len(tokens) - 1:
     if(token == '[/' + module_name + ']'):
       state = 1
     else:
+      
       applet.__setattr__(token, tokens[i+2])
       i += 2
   #applets_views.append(instance)
