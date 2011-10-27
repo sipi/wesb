@@ -23,7 +23,7 @@ class Screen(object):
     self.g = Graphics(self.num, self.height)
     self.separator = Separator(self.separator_width , self.height, self.separator_color)
 
-  def run(self):
+  def paint(self):
     self.g.x = self.width
     for applet in self.applets:
       self.g.x -= self.space

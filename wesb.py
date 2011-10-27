@@ -1,113 +1,67 @@
 
 import sys
-import time #sleep
+from time import time, sleep
+
+import util
 from Screen import Screen
 from AppletView import AppletView
 from AppletModel import AppletModel
 from Graphics import Graphics
 from Separator import Separator
 
+###########################
+#  FUNCTIONS              #
+###########################
 
-screens = []
-applets_models = set()
-
-#Tokenize
-
-def isBlank(char):
-  return char == ' ' or char == '\t' or char == '\n'
-
-def tokenize(line):
-  tokens = []
-  deb = 0
+def readConf(path):
+  tokens = util.tokenizeFile(path)
+  
+  screens = []
   state = 0
-  for i in range(len(line)):
-    if( state == 0):
-      if(not isBlank(line[i])):
-        if(line[i] == '"'):
-          deb = i+1
-          state = 2
-        elif(line[i] == "'"):
-          deb = i+1
-          state = 3
-        elif(line[i] == "#"):
-          state = 9
-        else:
-          deb = i
-          state = 1
+  i = -1
+  while i < len(tokens) - 1:
+    i += 1
+    token = tokens[i]
 
-    elif( state == 1 ):
-      if(isBlank(line[i])):
-        tokens.append( line[deb: i] )
-        state = 0
-    
-    elif( state == 2 ):
-      if(line[i] == '"'):
-        tokens.append( line[deb: i] )
-        state = 0
+    if(state == 0):
+      if(token == '[screen]'):
+        screen = Screen()
+        screens.append(screen)
+        state = 1;
   
-    elif( state == 3 ):
-      if(line[i] == "'"):
-        tokens.append( line[deb: i] )
+    elif(state == 1):
+      if(token == '[/screen]'):
         state = 0
-
-    elif( state == 9 ):
-      if(line[i] == "\n"):
-        state = 0
-
-  if( state == 1 ):
-    tokens.append(line[deb:i+1])
-
-  return tokens
-
-# End tokenize 
-########################
-
-
-tokens = []
-f= open('wesb.conf','r')
-for line in f:
-  for token in tokenize(line):
-    tokens.append(token)
-f.close()
-
-
-state = 0;
-i = -1;
-while i < len(tokens) - 1:
+      elif(token[0] == "["): #add an applet to the current screen
+        package_name = "applets."
+        module_name = token[1:-1]
+        mod = __import__(package_name + module_name)
+        applet = getattr(sys.modules[package_name + module_name], module_name)()
+        screen.addApplet(applet)
+        state = 2
+      else:
+        screen.__setattr__(token, tokens[i+2]) #set an attribut of the current screen
+        i += 2
   
-  i += 1
-  token = tokens[i]
+    elif(state == 2):
+      if(token == '[/' + module_name + ']'):
+        state = 1
+      else:
+        applet.__setattr__(token, tokens[i+2]) #set an attribut of the current applet
+        i += 2
 
-  if(state == 0):
-    if(token == '[screen]'):
-      screen = Screen()
-      screens.append(screen)
-      state = 1;
-  
-  elif(state == 1):
-    if(token == '[/screen]'):
-      state = 0
-    elif(token[0] == "["):
-      package_name = "applets."
-      module_name = token[1:-1]
-      mod = __import__(package_name + module_name)
-      applet = getattr(sys.modules[package_name + module_name], module_name)()
-      screen.addApplet(applet)
-      state = 2
-    else:
-      screen.__setattr__(token, tokens[i+2])
-      i += 2
-  
-  elif(state == 2):
-    if(token == '[/' + module_name + ']'):
-      state = 1
-    else:
-      
-      applet.__setattr__(token, tokens[i+2])
-      i += 2
-  #applets_views.append(instance)
-  #applets_models.add(instance.getModel())
+  return screens
 
+# End readConf
+################
+
+
+##############################
+#  MAIN                      #
+##############################
+
+screens = readConf("wesb.conf")
+applets_models = set()
 
 for screen in screens:
   screen.init()
@@ -116,14 +70,16 @@ for screen in screens:
     applets_models.add(applet.getModel())
 
 
+############
+# MAIN LOOP
+while True: 
+  sleep(0.1)
 
-while 1==1:
-  time.sleep(0.1)
-
-  new_time = time.time()
+  new_time = time()
   for model in applets_models:
-    model.run(new_time)
+    model.setTime(new_time) #triggers the update if necessary
     
   for screen in screens:
-    screen.run()    
+    screen.paint()
+
 

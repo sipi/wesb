@@ -7,7 +7,7 @@ class AppletModel(object):
     self.refresh_period = refresh_period; #-1 => no refresh
     self.last_time = 0;
 
-  def run(self, new_time):
+  def setTime(self, new_time):
     if (not self.refresh_period == -1) and new_time - self.last_time > self.refresh_period:
      self.last_time = new_time
      self.update()
