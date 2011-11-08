@@ -1,5 +1,5 @@
 
-from AppletView import AppletView
+from core.AppletView import AppletView
 from SoundModel import SoundModel
 
 

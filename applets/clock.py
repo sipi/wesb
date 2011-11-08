@@ -1,8 +1,8 @@
 
 import time
 
-from AppletView import AppletView
-from AppletModel import AppletModel
+from core.AppletView import AppletView
+from core.AppletModel import AppletModel
 
 class clock(AppletView, AppletModel):
  

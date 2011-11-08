@@ -1,5 +1,5 @@
 
-from AppletModel import AppletModel
+from core.AppletModel import AppletModel
 
 try:
   import alsaaudio as alsa

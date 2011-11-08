@@ -2,12 +2,12 @@
 import sys
 from time import time, sleep
 
-import util
-from Screen import Screen
-from AppletView import AppletView
-from AppletModel import AppletModel
-from Graphics import Graphics
-from Separator import Separator
+import core.util as util
+from core.Screen import Screen
+from core.AppletView import AppletView
+from core.AppletModel import AppletModel
+from core.Graphics import Graphics
+from core.Separator import Separator
 
 ###########################
 #  FUNCTIONS              #
