@@ -1,2 +1,2 @@
 #!/bin/bash
-python wesb.py
+python wesb.py &
