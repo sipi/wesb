@@ -1,6 +1,6 @@
 #    WESB - Wmfs extensible status bar
 #
-#    Copyright (C) 2011  Clément Sipieter <c.sipieter@gmail.com>
+#    Copyright (C) 2011  Clement Sipieter <c.sipieter@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
     
 import sys
+import os
 from time import time, sleep
 
 import core.util as util
@@ -77,7 +78,14 @@ def readConf(path):
 #  MAIN                      #
 ##############################
 
-screens = readConf("wesb.conf")
+home_path = os.environ['HOME']
+
+try:
+  screens = readConf(home_path + "/.config/wmfs/wesb.conf")
+except IOError:
+  screens = readConf("./wesb.conf")
+
+
 applets_models = set()
 
 for screen in screens:
