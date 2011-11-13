@@ -79,9 +79,18 @@ def readConf(path):
 ##############################
 
 home_path = os.environ['HOME']
+conf_path = home_path + "/.config/wmfs/wesb.conf"
+
+
+##############################
+# ARGUMENT PROCESSING
+for i in range(1, len(sys.argv)):
+     if(sys.argv[i] == '-c' and len(sys.argv) > i+1):
+        conf_path = sys.argv[i+1]
+      
 
 try:
-  screens = readConf(home_path + "/.config/wmfs/wesb.conf")
+  screens = readConf(conf_path)
 except IOError:
   screens = readConf("./wesb.conf")
 
