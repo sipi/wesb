@@ -46,4 +46,5 @@ class Graphics:
   def drawVBar(self, x, y, width, height, percent, bg_color, fg_color, border_color, border_size = 1):
     self.drawRect( x, y, width, height, border_color)
     self.drawRect( x + border_size, y + border_size, width - 2*border_size, height - 2*border_size, bg_color)  
-    self.drawRect( x + border_size, y + border_size, width - 2*border_size, (height - 2*border_size)*percent, fg_color)
+    bar_height = int((height - 2*border_size)*percent)
+    self.drawRect( x + border_size, y + height - bar_height - border_size, width - 2*border_size, bar_height, fg_color)
