@@ -68,4 +68,19 @@ def tokenize(string):
 # End tokenize 
 ########################
 
+def array( length, default_value ):
+  array = []
+  for i in xrange(length):
+    array.append(default_value)
+
+  return array
+
+
+def array2d( first_dim_length, second_dim_length, default_value ):
+  _array = []
+  for i in xrange( first_dim_length ):
+    _array.append( array( second_dim_length, default_value ) )
+
+  return _array
+
 
